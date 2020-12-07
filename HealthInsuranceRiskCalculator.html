@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Insurance Risk Calculator</title>
+</head>
+
+<!--
+    Author: Patryk Krawczyk
+    Source Code: https://www.w3schools.com/js/
+-->
+
+<body style="background-color:blanchedalmond;">
+
+    <h1>Health Insurance Risk Calculator </h1>
+    <p>Please enter your height and weight:</p>
+
+<!--
+    Asks a question with drop down selection
+-->
+
+</head>
+<p>Height: <input type="text" id="height"/>
+    <select type="multiple" id="heightunits">
+        <option value="metres" selected="selected">metres</option>
+        <option value="inches">inches</option>
+    </select>
+</p>
+<p>Weight: <input type="text" id="weight"/>
+    <select type="multiple" id="weightunits">
+        <option value="kg" selected="selected">kilograms</option>
+        <option value="lb">pounds</option>
+    </select> <br><br>
+<h2>Your BMI is: <span id="output">?</span></h2>
+</p>
+
+    <label>Select Your Age:</label><br>
+    <select id="q1">
+        <option value="0">Under 30</option>
+        <option value="10">31 - 45</option>
+        <option value="20">46 - 60</option>
+        <option value="30">61+</option>
+    </select>
+
+    <br><br><br>
+
+    <label>What is your current blood pressure?</label><br>
+    <select id="q2">
+        <option value="0">Normal</option>
+        <option value="15">Elevated</option>
+        <option value="30">Stage 1</option>
+        <option value="75">Stage 2</option>
+        <option value="100">Crisis</option>
+    </select>
+
+    <br><br><br>
+
+
+    <label>Do you have a history of family diseases? Select all that apply.</label><br><br>
+    <label>Cancer?</label>
+    <select id="q3">
+        <option value="10">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <br><br>
+
+
+    <label>Diabetes?</label>
+    <select id="q4">
+        <option value="10">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <br><br>
+
+    <label>Alzheimer's?</label>
+    <select id="q5">
+        <option value="10">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <br><br>
+
+<!--
+    Button to click calculate.
+    The function is shown below
+-->
+
+<script>
+
+console.log("Starting Risk Calculator")
+
+function calculateRisk(){
+
+    let desiredResponse1 = 0
+    let desiredResponse2 = 0
+    let desiredResponse3 = 0
+    let desiredResponse4 = 0
+    let desiredResponse5 = 0
+
+    let question1Response = document.getElementById('q1').selectedOptions[0].value
+    console.log("Question 1 Response: " + question1Response);
+    let question1Risk = Math.abs(question1Response - desiredResponse1)
+    console.log(question1Risk)
+
+    let question2Response = document.getElementById('q2').selectedOptions[0].value
+    console.log("Question 2 Response: " + question2Response);
+    let question2Risk = Math.abs(question2Response - desiredResponse2)
+    console.log(question2Risk)
+
+    let question3Response = document.getElementById('q3').selectedOptions[0].value
+    console.log("Question 3 Response: " + question3Response);
+    let question3Risk = Math.abs(question3Response - desiredResponse3)
+    console.log(question3Risk)
+
+    let question4Response = document.getElementById('q4').selectedOptions[0].value
+    console.log("Question 4 Response: " + question4Response);
+    let question4Risk = Math.abs(question4Response - desiredResponse4)
+    console.log(question4Risk)
+
+    let question5Response = document.getElementById('q5').selectedOptions[0].value
+    console.log("Question 5 Response: " + question5Response);
+    let question5Risk = Math.abs(question5Response - desiredResponse5)
+    console.log(question5Risk)
+
+    console.log("BMI Calculation")
+    //Obtain user inputs
+    var height=Number(document.getElementById("height").value);
+    var heightunits=document.getElementById("heightunits").value;
+    var weight=Number(document.getElementById("weight").value);
+    var weightunits=document.getElementById("weightunits").value;
+
+    //Convert all units to metric
+    if (heightunits=="inches") height/=39.3700787;
+    if (weightunits=="lb") weight/=2.20462;
+
+    //Perform calculation
+    var BMI=weight/Math.pow(height,2);
+    roundBMI = Math.round(BMI*100)/100;
+    score = Math.ceil(roundBMI)
+    answer = 0
+    console.log("BMI Score = "+answer)
+
+    if (roundBMI<=24.9){
+        answer+=0
+    }
+    else if (roundBMI<=29.9){
+        answer+=30
+    }
+    else{
+        answer+=75
+    }
+
+    //Display result of calculation
+    document.getElementById("output").innerText=roundBMI
+    bmi = output
+    console.log(output)
+
+    //Risk Calculation
+
+    let risk = Number(question1Risk) + Number(question2Risk) + Number(question3Risk) + Number(question4Risk) + Number(question5Risk) + Number(answer) 
+
+    result1 = "This person is at low risk"
+    result2 = "This person is at moderate risk"
+    result3 = "This person is at high risk"
+    result4 = "This person is uninsurable"
+
+    //Risk Final Result Messages
+
+    if (risk >100){
+        document.getElementById("risk").innerHTML = result4;
+    }
+    else if(risk > 75){
+        document.getElementById("risk").innerHTML = result3;
+    }
+    else if(risk > 50){
+        document.getElementById("risk").innerHTML = result2;
+    }
+    else if(risk > 20){
+        document.getElementById("risk").innerHTML = result1;
+    }
+    console.log("Total Risk = " + risk)
+}
+
+
+</script>
+
+<button onclick="calculateRisk()">Calculate Risk</button>
+<p id="risk"></p>
+
+</body>
+</html>
